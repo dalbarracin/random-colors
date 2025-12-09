@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #colorBox {
+      width: 650px;
+      height: 650px;
+      margin: 80px auto;
+      border-radius: 12px;
+    }
+
+    body {
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="language-picker js-language-picker" data-trigger-class="li4-btn li4-btn--subtle js-tab-focus">
+        <form action="" class="language-picker__form">
+            <label for="language-picker-select">Select your language</label>
+
+        <select name="language-picker-select" id="language-picker-select">
+            <option lang="de" value="de-DE">Deutsch</option>
+            <option lang="en" value="en-US" selected>English</option>
+            <option lang="es" value="es-MX">Español</option>
+            <option lang="fr" value="fr-FR">Français</option>
+            <option lang="it" value="it-IT">Italiano</option>
+            <option lang="da" value="da-DK">Dansk</option>
+            </select>
+        </form>
+    </div>
+    
+    <div id="colorBox"></div>
+
+    <script>
+        const translations = {
+            en: {
+                white: "white",
+                black: "black",
+                blue: "blue",
+                red: "red",
+                gray: "gray",
+                orange: "orange",
+                green: "green",
+                light_green: "light green",
+                light_blue: "light blue",
+                purple: "purple",
+                brown: "brown",
+                yellow: "yellow"
+            },
+            fr: {
+                white: "blanc",
+                black: "noir",
+                blue: "bleu",
+                red: "rouge",
+                gray: "gris",
+                orange: "orange",
+                green: "vert",
+                light_green: "vert clair",
+                light_blue: "bleu clair",
+                purple: "violet",
+                brown: "marron",
+                yellow: "jaune"
+            },
+            de: {
+                white: "weiß",
+                black: "schwarz",
+                blue: "blau",
+                red: "rot",
+                gray: "grau",
+                orange: "orange",
+                green: "grün",
+                light_green: "hellgrün",
+                light_blue: "hellblau",
+                purple: "lila",
+                brown: "braun",
+                yellow: "gelb"
+            },
+            es: {
+                white: "blanco",
+                black: "negro",
+                blue: "azul",
+                red: "rojo",
+                gray: "gris",
+                orange: "naranja",
+                green: "verde",
+                light_green: "verde claro",
+                light_blue: "azul claro",
+                purple: "morado",
+                brown: "marrón",
+                yellow: "amarillo"
+            },
+            it: {
+                white: "bianco",
+                black: "nero",
+                blue: "blu",
+                red: "rosso",
+                gray: "grigio",
+                orange: "arancione",
+                green: "verde",
+                light_green: "verde chiaro",
+                light_blue: "azzurro chiaro",
+                purple: "viola",
+                brown: "marrone",
+                yellow: "giallo"
+            },
+            da: {
+                white: "hvid",
+                black: "sort",
+                blue: "blå",
+                red: "rød",
+                gray: "grå",
+                orange: "orange",
+                green: "grøn",
+                light_green: "lysegrøn",
+                light_blue: "lyseblå",
+                purple: "lilla",
+                brown: "brun",
+                yellow: "gul"
+            }
+        };
+
+        const colors = [
+            { id: "white",       css: "white" },
+            { id: "black",       css: "black" },
+            { id: "blue",        css: "blue" },
+            { id: "red",         css: "red" },
+            { id: "gray",        css: "gray" },
+            { id: "orange",      css: "orange" },
+            { id: "green",       css: "green" },
+            { id: "light_green", css: "lightgreen" },
+            { id: "light_blue",  css: "lightblue" },
+            { id: "purple",      css: "purple" },
+            { id: "brown",       css: "brown" },
+            { id: "yellow",      css: "yellow" }
+        ];
+
+        let index = 0;
+
+        function updateColor() {
+            colorBox = document.getElementById("colorBox");
+            languageSelect = document.getElementById('language-picker-select');
+            langAttribute = languageSelect.options[languageSelect.selectedIndex].getAttribute("lang");
+        
+            index = Math.floor(Math.random() * (11 - 0 + 1)) + 0;
+            colorBox.style.backgroundColor = colors[index].css;
+            
+            speech = translations[langAttribute][colors[index].id]
+            utterance = new SpeechSynthesisUtterance(speech);
+            utterance.lang = languageSelect.value;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        updateColor();
+        setInterval(updateColor, 3000);
+    </script>
+</body>
+</html>
